@@ -5,11 +5,11 @@ Started: 2026-08-12
 
 ## Tasks
 
-- [ ] Task 1: Project Setup & Design System Tokens
-- [ ] Task 2: Supabase Client & Auth State Management
-- [ ] Task 3: Geolocation & Reverse-Geocoding Service
-- [ ] Task 4: Supabase Data & Storage Service Layer
-- [ ] Task 5: Food Log Form Modal Component
-- [ ] Task 6: Food Feed Card Gallery & Filter Header
-- [ ] Task 7: Main App Layout & Integration
-- [ ] Task 8: Verification & Build Validation
+- [x] Task 1: Project Setup & Design System Tokens (commit 55d76a9)
+- [x] Task 2: Supabase Client & Auth State Management (commit ee67272)
+- [x] Task 3: Geolocation & Reverse-Geocoding Service (commit 72963bd)
+- [x] Task 4: Supabase Data & Storage Service Layer (commit e60f386)
+- [x] Task 5: Food Log Form Modal Component (commit 157c967)
+- [x] Task 6: Food Feed Card Gallery & Filter Header (commit 1b97fc2)
+- [x] Task 7: Main App Layout & Integration (commit 59dd039)
+- [x] Task 8: Verification & Build Validation (passed npm run build)
