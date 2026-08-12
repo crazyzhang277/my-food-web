@@ -6,7 +6,7 @@
 
 ## 🌐 线上部署与在线体验 (Live Demo)
 
-- 🔗 **Cloudflare Pages 部署链接**：[https://my-food-web.pages.dev](https://my-food-web.pages.dev)
+- 🔗 **Cloudflare Pages / Workers 部署链接**：[https://my-food-web.js-2773612084.workers.dev](https://my-food-web.js-2773612084.workers.dev)
 - 📦 **GitHub 源代码仓库**：[https://github.com/crazyzhang277/my-food-web](https://github.com/crazyzhang277/my-food-web)
 
 ---
@@ -26,7 +26,7 @@
 
 - **前端框架**：React 18 + Vite
 - **后端与云服务**：[Supabase](https://supabase.com/) (Auth, PostgreSQL, Storage Bucket)
-- **云端部署**：Cloudflare Pages (`https://my-food-web.pages.dev`)
+- **云端部署**：Cloudflare Workers / Pages (`https://my-food-web.js-2773612084.workers.dev`)
 - **动效引擎**：Framer Motion
 - **图标库**：Lucide Icons (`lucide-react`)
 - **地理解析**：Browser Geolocation API + OpenStreetMap Reverse Geocoding
@@ -72,18 +72,14 @@ create table public.food_logs (
 alter table public.profiles enable row level security;
 alter table public.food_logs enable row level security;
 
--- 4. RLS 安全策略
-create policy "Users can view own food logs" on public.food_logs
-  for select using (auth.uid() = user_id);
-
-create policy "Users can insert own food logs" on public.food_logs
-  for insert with check (auth.uid() = user_id);
-
-create policy "Users can update own food logs" on public.food_logs
-  for update using (auth.uid() = user_id);
-
-create policy "Users can delete own food logs" on public.food_logs
-  for delete using (auth.uid() = user_id);
+-- 4. RLS 安全策略与外键修复
+alter table public.food_logs drop constraint if exists food_logs_user_id_fkey;
+alter table public.food_logs add constraint food_logs_user_id_fkey foreign key (user_id) references auth.users(id) on delete cascade;
+create policy "Allow profile insert" on public.profiles for insert with check (true);
+create policy "Users can view own food logs" on public.food_logs for select using (auth.uid() = user_id);
+create policy "Users can insert own food logs" on public.food_logs for insert with check (auth.uid() = user_id);
+create policy "Users can update own food logs" on public.food_logs for update using (auth.uid() = user_id);
+create policy "Users can delete own food logs" on public.food_logs for delete using (auth.uid() = user_id);
 ```
 
 ---
@@ -100,8 +96,8 @@ npm install
 ### 2. 环境变量配置 (`.env.local`)
 在项目根目录新建 `.env.local` 文件并填入你的 Supabase 配置：
 ```env
-VITE_SUPABASE_URL=https://your-supabase-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_SUPABASE_URL=https://mqrkgtogkkdezicozoqv.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xcmtndG9na2tkZXppY296b3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1MjA3MzUsImV4cCI6MjEwMjA5NjczNX0.B3C-nHWCjPZKTCB1eYzd6sj6DmEx8qbIJ_joyU7eZc8
 ```
 
 ### 3. 启动开发服务器
@@ -112,9 +108,9 @@ npm run dev
 
 ---
 
-## ⚡ 部署到 Cloudflare Pages
+## ⚡ 部署到 Cloudflare
 
-1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)，选择 **Workers & Pages** $\rightarrow$ **Create Application** $\rightarrow$ **Pages** $\rightarrow$ **Connect to Git**。
+1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)，选择 **Workers & Pages** $\rightarrow$ **Create Application** $\rightarrow$ **Connect to Git**。
 2. 选中仓库 `crazyzhang277/my-food-web`。
 3. **Build Settings**:
    - **Framework Preset**: `Vite`
