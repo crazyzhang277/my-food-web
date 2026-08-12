@@ -3,7 +3,7 @@ import { Search } from 'lucide-react';
 
 export function FilterBar({ cities, selectedCity, onSelectCity, searchQuery, onSearchChange }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px', width: '100%' }}>
       {/* Search Input */}
       <div style={{ position: 'relative', width: '100%' }}>
         <Search size={18} style={{ position: 'absolute', left: '14px', top: '14px', color: 'var(--text-muted)' }} />
@@ -19,7 +19,10 @@ export function FilterBar({ cities, selectedCity, onSelectCity, searchQuery, onS
       </div>
 
       {/* City Pills Horizontal Scroll */}
-      <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px' }}>
+      <div style={{
+        display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px',
+        WebkitOverflowScrolling: 'touch', width: '100%', maxWidth: '100%'
+      }}>
         <button
           onClick={() => onSelectCity('')}
           style={{
@@ -27,7 +30,7 @@ export function FilterBar({ cities, selectedCity, onSelectCity, searchQuery, onS
             background: selectedCity === '' ? 'var(--accent-gradient)' : 'var(--card-bg)',
             color: selectedCity === '' ? '#fff' : 'var(--text-secondary)',
             border: '1px solid var(--glass-border)', whiteSpace: 'nowrap',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+            boxShadow: '0 2px 8px rgba(0,0,0,0.04)', flexShrink: 0
           }}
         >
           全部城市
@@ -40,7 +43,7 @@ export function FilterBar({ cities, selectedCity, onSelectCity, searchQuery, onS
               background: selectedCity === c ? 'var(--accent-gradient)' : 'var(--card-bg)',
               color: selectedCity === c ? '#fff' : 'var(--text-secondary)',
               border: '1px solid var(--glass-border)', whiteSpace: 'nowrap',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)', flexShrink: 0
             }}
           >
             📍 {c}

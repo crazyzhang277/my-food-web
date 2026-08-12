@@ -1,18 +1,21 @@
 @import './styles/theme.css';
 
-* {
+html, body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
-}
-
-body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-body);
   min-height: 100vh;
-  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 button {
@@ -31,4 +34,22 @@ input, textarea, select {
 ::placeholder {
   color: var(--text-muted);
   opacity: 0.8;
+}
+
+/* Responsive media guards to prevent horizontal overflow */
+img, video, iframe {
+  max-width: 100%;
+}
+
+/* Mobile Touch Scroll Bar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(160, 147, 136, 0.4);
+  border-radius: 9999px;
 }
