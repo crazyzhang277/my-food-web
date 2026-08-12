@@ -46,8 +46,9 @@ graph TD
    - Form fields: Email, Password.
    - Calls `supabase.auth.signInWithPassword()`.
    - Persists session in `localStorage` automatically via Supabase SDK.
-3. **Guest / Demo Mode**:
-   - Allows users to test adding food logs locally using `localStorage` before registering/logging in.
+3. **Mandatory Login Enforcement**:
+   - Creating, editing, or uploading food logs strictly requires an active user session (`auth.uid() != null`).
+   - If an unauthenticated user attempts to click the "新增打卡 (+)" button, an elegant login modal/drawer is triggered automatically, requiring sign-in or registration before proceeding.
 
 ---
 
