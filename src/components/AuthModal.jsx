@@ -10,6 +10,7 @@ export function AuthModal() {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   if (!isAuthModalOpen) return null;
@@ -17,10 +18,17 @@ export function AuthModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
+    setSuccessMsg('');
     setSubmitting(true);
     try {
       if (isSignUp) {
-        await signUp(email, password, username);
+        const data = await signUp(email, password, username);
+        if (data?.user && !data?.session) {
+          setSuccessMsg('注册成功！请去邮箱查收确认邮件。若无需邮箱验证，可在 Supabase 控制台 Auth -> Email 中关闭 "Confirm email"。');
+          setIsSignUp(false);
+          setSubmitting(false);
+          return;
+        }
       } else {
         await signIn(email, password);
       }
@@ -82,6 +90,15 @@ export function AuthModal() {
               color: '#dc2626', padding: '10px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px'
             }}>
               {errorMsg}
+            </div>
+          )}
+
+          {successMsg && (
+            <div style={{
+              background: 'rgba(34, 197, 94, 0.12)', border: '1px solid rgba(34, 197, 94, 0.3)',
+              color: '#16a34a', padding: '10px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px'
+            }}>
+              {successMsg}
             </div>
           )}
 
