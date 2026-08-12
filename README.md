@@ -1,93 +1,63 @@
-# 🍜 GourmetLog — 个人美食打卡与记忆库
+# GourmetLog
 
-> **GourmetLog** 是一款专注于记录、定位与分享个人美食记忆的高奢风移动端优先 Web 应用。具备 Supabase 云端多端实时同步、GPS 坐标自动逆地理编码解析城市、照片高保真压缩上传云盘，以及极具仪式感的美食打卡体验。
+个人美食打卡与记忆库，使用 React + Vite，Supabase 提供 Auth、PostgreSQL 和 Storage。
 
----
+## 本地运行
 
-## 🌐 线上部署与在线体验 (Live Demo)
-
-- 🔗 **Cloudflare Pages / Workers 部署链接**：[https://my-food-web.js-2773612084.workers.dev](https://my-food-web.js-2773612084.workers.dev)
-- 📦 **GitHub 源代码仓库**：[https://github.com/crazyzhang277/my-food-web](https://github.com/crazyzhang277/my-food-web)
-
----
-
-## ✨ 核心特性
-
-- 🔒 **Supabase 云端同步与账号体系**：全端登录同步，数据隐私隔离，支持邮箱/密码注册登录。
-- 📍 **GPS 顺滑自动定位与城市解析**：内置 `navigator.geolocation` 结合 OpenStreetMap Nominatim 逆地理编码，一键精准解析当前城市与街道。
-- 📸 **照片云盘存储**：上传美食图片自动进行前端轻量压缩，并快速持久化存储于 Supabase Storage (`food-images`)。
-- 🎨 **法式暖米高奢视觉 (Gourmet Light Theme)**：摒弃沉闷暗黑，采用温暖舒缓的法式米白纸底（`#FAF6F0`）、琥珀暖火渐变与高透毛玻璃面板，极致唤醒食欲。
-- 💫 **Framer Motion 物理拟真微动效**：弹性五星打分、流畅 Modal Drawer 抽屉、卡片 Hover/Tap 缩放与手势缩放反馈。
-- 🔍 **多维检索与城市标签导航**：支持关键词全文搜索（餐厅、菜品、心得）以及城市横向滑动 Pill 导航。
-
----
-
-## 🛠️ 技术栈
-
-- **前端框架**：React 18 + Vite
-- **后端与云服务**：[Supabase](https://supabase.com/) (Auth, PostgreSQL, Storage Bucket)
-- **云端部署**：Cloudflare Workers / Pages (`https://my-food-web.js-2773612084.workers.dev`)
-- **动效引擎**：Framer Motion
-- **图标库**：Lucide Icons (`lucide-react`)
-- **地理解析**：Browser Geolocation API + OpenStreetMap Reverse Geocoding
-- **图片处理**：`browser-image-compression`
-
----
-
-## 🗄️ 数据库 Schema 配置 (Supabase SQL)
-
-在 Supabase Dashboard 的 SQL Editor 中运行 [`supabase/schema.sql`](supabase/schema.sql)。该脚本会创建数据表、RLS 策略、`food-images` Storage 桶，以及按用户目录限制的图片上传策略。
-
-若项目已存在旧表，请直接执行该脚本；其中的 `create table if not exists` 与 `drop policy if exists` 设计为可重复执行。
-
----
-
-## 🚀 本地开发与启动指南
-
-### 1. 克隆项目与安装依赖
 ```bash
-git clone https://github.com/crazyzhang277/my-food-web.git
-cd my-food-web
 npm install
 ```
 
-### 2. 环境变量配置 (`.env.local`)
-在项目根目录新建 `.env.local` 文件并填入你的 Supabase 配置：
+复制 `.env.example` 为 `.env.local`，填入 Supabase 项目配置：
+
 ```env
-VITE_SUPABASE_URL=https://mqrkgtogkkdezicozoqv.supabase.co
-VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1xcmtndG9na2tkZXppY296b3F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY1MjA3MzUsImV4cCI6MjEwMjA5NjczNX0.B3C-nHWCjPZKTCB1eYzd6sj6DmEx8qbIJ_joyU7eZc8
+VITE_SUPABASE_URL=https://your-project-ref.supabase.co
+VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-### 3. 启动开发服务器
+然后运行：
+
 ```bash
 npm run dev
 ```
-打开浏览器访问 `http://localhost:3000` 即可开始使用。
 
----
+打开 `http://localhost:3000`。
 
-## ⚡ 部署到 Cloudflare
+首次使用前，在 Supabase Dashboard 的 SQL Editor 中执行 [`supabase/schema.sql`](supabase/schema.sql)。
 
-1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com/)，选择 **Workers & Pages** $\rightarrow$ **Create Application** $\rightarrow$ **Connect to Git**。
-2. 选中仓库 `crazyzhang277/my-food-web`。
-3. **Build Settings**:
-   - **Framework Preset**: `Vite`
-   - **Build Command**: `npm run build`
-   - **Build Output Directory**: `dist`
-4. 环境变量增加 `VITE_SUPABASE_URL` 与 `VITE_SUPABASE_ANON_KEY`，点击 **Save and Deploy** 即可完成秒级部署。
+## 部署到 GitHub Pages
 
----
+项目已包含 `.github/workflows/deploy-pages.yml`，会在 `main` 分支有新提交时自动构建和发布。
 
-## 🔮 路线图与后续迭代计划 (Roadmap)
+1. 推送代码到 GitHub 仓库的 `main` 分支。
+2. 打开仓库 **Settings → Secrets and variables → Actions**。
+3. 新增两个 Repository secrets：
+   - `VITE_SUPABASE_URL`：Supabase 项目 URL。
+   - `VITE_SUPABASE_ANON_KEY`：Supabase 的 publishable/anon key。
+4. 打开 **Settings → Pages**，将 **Build and deployment → Source** 设置为 **GitHub Actions**。
+5. 在 **Actions** 页面等待 `Deploy to GitHub Pages` 完成。
 
-- [ ] 🗺️ **交互式足迹地图大屏**：集成 Mapbox / 高德地图，以动态标记点展示所有打卡过的餐厅与城市地图轨迹。
-- [ ] 📊 **个人年度食记与口味统计报告**：可视化展示最爱的菜系标签雷达图、人均消费趋势图与年度打卡频次分析。
-- [ ] 👥 **私密圈子与美食共享**：支持生成精美食记海报卡片分享给好友，或创建家庭/情侣专属美食打卡圈。
-- [ ] 🤖 **AI 智能菜品与卡路里识别**：拍摄美食照片，AI 自动识别菜品名称、风味特征与大致热量估算。
-- [ ] 📱 **PWA 离线打卡缓存**：无网环境下先暂存离线打卡，连网后后台全自动静默同步至 Supabase 云端。
+默认地址为：
 
----
+`https://crazyzhang277.github.io/my-food-web/`
 
-## 📄 开源许可证
+如果仓库名称或 GitHub 用户名不同，请将地址中的对应部分替换掉。
 
-[MIT License](LICENSE) © 2026 GourmetLog Team
+## Supabase 配置
+
+在 Supabase Dashboard 的 **Authentication → URL Configuration** 中设置：
+
+- **Site URL**：`https://crazyzhang277.github.io/my-food-web/`
+- **Redirect URLs**：`https://crazyzhang277.github.io/my-food-web/**`
+
+本项目使用邮箱/密码登录。若打开了邮箱确认功能，确认邮件跳转也应使用上面的 Pages 地址。
+
+## 安全注意事项
+
+前端可以使用 `VITE_SUPABASE_URL` 和 `VITE_SUPABASE_ANON_KEY`，数据库安全依赖 RLS 策略。
+
+`service_role` key 具有管理员权限，绝不能放入前端、构建产物或提交到 GitHub。
+
+## GitHub Actions 说明
+
+Vite 在 GitHub Actions 构建时会使用 `/my-food-web/` 作为资源前缀，因此仓库 Pages 地址下的 JS、CSS 和图片可以正常加载；本地开发仍使用根路径 `/`。
