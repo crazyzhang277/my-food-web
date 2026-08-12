@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { AuthModal } from './components/AuthModal';
 import { AddFoodModal } from './components/AddFoodModal';
+import { FoodDetailModal } from './components/FoodDetailModal';
 import { FoodCard } from './components/FoodCard';
 import { FilterBar } from './components/FilterBar';
 import { fetchFoodLogs, deleteFoodLog } from './services/foodService';
@@ -12,6 +13,7 @@ function MainApp() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [selectedLogForDetail, setSelectedLogForDetail] = useState(null);
   const [selectedCity, setSelectedCity] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -177,7 +179,12 @@ function MainApp() {
             display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px'
           }}>
             {filteredLogs.map(log => (
-              <FoodCard key={log.id} log={log} onDelete={handleDelete} />
+              <FoodCard
+                key={log.id}
+                log={log}
+                onDelete={handleDelete}
+                onClickCard={(l) => setSelectedLogForDetail(l)}
+              />
             ))}
           </div>
         )}
@@ -203,6 +210,12 @@ function MainApp() {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onSuccess={loadData}
+      />
+      <FoodDetailModal
+        log={selectedLogForDetail}
+        isOpen={!!selectedLogForDetail}
+        onClose={() => setSelectedLogForDetail(null)}
+        onDelete={handleDelete}
       />
     </div>
   );

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, MapPin, Calendar, Trash2, Map, ChevronLeft, ChevronRight, X, Images, Eye } from 'lucide-react';
+import { Star, MapPin, Calendar, Trash2, Map, ChevronLeft, ChevronRight, X, Images } from 'lucide-react';
 
-export function FoodCard({ log, onDelete }) {
+export function FoodCard({ log, onDelete, onClickCard }) {
   const [showMap, setShowMap] = useState(false);
   const [activeImgIndex, setActiveImgIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -30,6 +30,7 @@ export function FoodCard({ log, onDelete }) {
         exit={{ opacity: 0, scale: 0.9 }}
         whileHover={{ y: -6 }}
         whileTap={{ scale: 0.98 }}
+        onClick={() => onClickCard && onClickCard(log)}
         style={{
           background: 'var(--card-bg)',
           border: '1px solid var(--glass-border)',
@@ -37,10 +38,11 @@ export function FoodCard({ log, onDelete }) {
           overflow: 'hidden',
           boxShadow: 'var(--shadow-card)',
           position: 'relative',
-          display: 'flex', flexDirection: 'column'
+          display: 'flex', flexDirection: 'column',
+          cursor: 'pointer'
         }}
       >
-        {/* Banner Zone (Map, Photo Carousel, or Hidden if No Photo) */}
+        {/* Banner Zone */}
         {(hasImages || (showMap && hasCoords)) && (
           <div style={{ height: '200px', width: '100%', position: 'relative', overflow: 'hidden', background: '#000' }}>
             {showMap && hasCoords ? (
@@ -55,7 +57,10 @@ export function FoodCard({ log, onDelete }) {
               />
             ) : hasImages ? (
               <div
-                onClick={() => setIsLightboxOpen(true)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsLightboxOpen(true);
+                }}
                 style={{ width: '100%', height: '100%', cursor: 'pointer', position: 'relative' }}
               >
                 <img
@@ -64,7 +69,6 @@ export function FoodCard({ log, onDelete }) {
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
                 
-                {/* Multi-Photo Navigation Controls */}
                 {images.length > 1 && (
                   <>
                     <button
@@ -115,7 +119,10 @@ export function FoodCard({ log, onDelete }) {
             {/* Toggle Map Button */}
             {hasCoords && (
               <button
-                onClick={() => setShowMap(!showMap)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowMap(!showMap);
+                }}
                 style={{
                   position: 'absolute', top: '12px', left: '12px', zIndex: 2,
                   background: 'rgba(255, 255, 255, 0.92)', backdropFilter: 'blur(8px)',
@@ -199,7 +206,13 @@ export function FoodCard({ log, onDelete }) {
               <Calendar size={12} /> {log.dining_date}
             </span>
             {onDelete && (
-              <button onClick={() => onDelete(log.id)} style={{ background: 'none', color: 'var(--text-muted)' }}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(log.id);
+                }}
+                style={{ background: 'none', color: 'var(--text-muted)' }}
+              >
                 <Trash2 size={14} />
               </button>
             )}
@@ -207,7 +220,7 @@ export function FoodCard({ log, onDelete }) {
         </div>
       </motion.div>
 
-      {/* Fullscreen High-Res Photo Gallery / Lightbox */}
+      {/* Fullscreen High-Res Photo Lightbox */}
       <AnimatePresence>
         {isLightboxOpen && hasImages && (
           <div style={{
@@ -255,7 +268,6 @@ export function FoodCard({ log, onDelete }) {
               )}
             </div>
 
-            {/* Thumbnails strip */}
             {images.length > 1 && (
               <div style={{ display: 'flex', gap: '8px', marginTop: '20px', overflowX: 'auto', padding: '10px' }}>
                 {images.map((img, idx) => (
