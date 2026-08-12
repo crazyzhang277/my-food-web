@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Lock, Mail, User, UtensilsCrossed } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { validatePasswordConfirmation } from '../lib/passwordValidation';
 
 export function AuthModal() {
   const { isAuthModalOpen, closeAuthModal, signIn, signUp } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmationPassword, setConfirmationPassword] = useState('');
   const [username, setUsername] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -19,6 +21,15 @@ export function AuthModal() {
     e.preventDefault();
     setErrorMsg('');
     setSuccessMsg('');
+
+    if (isSignUp) {
+      const passwordError = validatePasswordConfirmation(password, confirmationPassword);
+      if (passwordError) {
+        setErrorMsg(passwordError);
+        return;
+      }
+    }
+
     setSubmitting(true);
     try {
       if (isSignUp) {
@@ -139,8 +150,23 @@ export function AuthModal() {
                   background: 'var(--bg-primary)', border: '1px solid var(--glass-border)',
                   borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                 }}
-              />
-            </div>
+                />
+              </div>
+
+              {isSignUp && (
+                <div className="input-group" style={{ position: 'relative' }}>
+                  <Lock size={18} style={{ position: 'absolute', left: '12px', top: '12px', color: 'var(--text-muted)' }} />
+                  <input
+                    type="password" required placeholder="再次输入密码"
+                    value={confirmationPassword} onChange={e => setConfirmationPassword(e.target.value)}
+                    style={{
+                      width: '100%', padding: '10px 12px 10px 40px',
+                      background: 'var(--bg-primary)', border: '1px solid var(--glass-border)',
+                      borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
+                    }}
+                  />
+                </div>
+              )}
 
             <button
               type="submit" disabled={submitting}
@@ -157,7 +183,12 @@ export function AuthModal() {
           <div style={{ textAlign: 'center', marginTop: '16px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
             {isSignUp ? '已有账号？' : '还没有账号？'}
             <button
-              onClick={() => setIsSignUp(!isSignUp)}
+              onClick={() => {
+                setIsSignUp(!isSignUp);
+                setConfirmationPassword('');
+                setErrorMsg('');
+                setSuccessMsg('');
+              }}
               style={{ background: 'none', color: 'var(--accent-orange)', fontWeight: 600, marginLeft: '6px' }}
             >
               {isSignUp ? '直接登录' : '立即注册'}
