@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Star, MapPin, Tag, Calendar, Trash2 } from 'lucide-react';
+import { Star, MapPin, Calendar, Trash2, Map } from 'lucide-react';
 
 export function FoodCard({ log, onDelete }) {
+  const [showMap, setShowMap] = useState(false);
   const imageUrl = log.image_urls?.[0] || 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80';
+  const hasCoords = log.latitude && log.longitude;
 
   return (
     <motion.div
@@ -23,8 +25,22 @@ export function FoodCard({ log, onDelete }) {
         display: 'flex', flexDirection: 'column'
       }}
     >
+      {/* Header Image or Map Toggle */}
       <div style={{ height: '190px', width: '100%', position: 'relative', overflow: 'hidden' }}>
-        <img src={imageUrl} alt={log.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        {showMap && hasCoords ? (
+          <iframe
+            title="Location Map"
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            scrolling="no"
+            src={`https://www.openstreetmap.org/export/embed.html?bbox=${log.longitude - 0.008}%2C${log.latitude - 0.008}%2C${log.longitude + 0.008}%2C${log.latitude + 0.008}&layer=mapnik&marker=${log.latitude}%2C${log.longitude}`}
+            style={{ border: 0 }}
+          />
+        ) : (
+          <img src={imageUrl} alt={log.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+        )}
+
         <div style={{
           position: 'absolute', top: '12px', right: '12px',
           background: 'rgba(255, 255, 255, 0.92)', backdropFilter: 'blur(8px)',
@@ -35,6 +51,22 @@ export function FoodCard({ log, onDelete }) {
           <Star size={14} fill="var(--accent-amber)" color="var(--accent-amber)" />
           <span style={{ fontWeight: 700 }}>{log.rating}.0</span>
         </div>
+
+        {hasCoords && (
+          <button
+            onClick={() => setShowMap(!showMap)}
+            style={{
+              position: 'absolute', top: '12px', left: '12px',
+              background: 'rgba(255, 255, 255, 0.92)', backdropFilter: 'blur(8px)',
+              borderRadius: 'var(--radius-full)', padding: '4px 10px',
+              display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--accent-orange)', fontSize: '0.75rem', fontWeight: 600,
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            }}
+          >
+            <Map size={13} /> {showMap ? '查看照片' : '切换地图'}
+          </button>
+        )}
+
         <div style={{
           position: 'absolute', bottom: '12px', left: '12px',
           background: 'var(--accent-gradient)', color: '#fff',

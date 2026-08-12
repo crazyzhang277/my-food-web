@@ -1,5 +1,5 @@
 /**
- * Reverse-geocode latitude and longitude to city and detailed address using Nominatim API.
+ * Reverse-geocode latitude and longitude to province, city, district and detailed address.
  */
 export async function reverseGeocode(lat, lng) {
   try {
@@ -11,20 +11,29 @@ export async function reverseGeocode(lat, lng) {
     const data = await response.json();
     const addressObj = data.address || {};
     
-    // Extract city (handling Municipality vs Normal City)
-    const city = addressObj.city || addressObj.town || addressObj.county || addressObj.state || '未知城市';
-    const road = addressObj.road || addressObj.suburb || addressObj.neighbourhood || '';
-    const fullAddress = `${city} ${road}`.trim();
+    const province = addressObj.state || addressObj.province || '';
+    const city = addressObj.city || addressObj.town || addressObj.municipality || addressObj.county || '未知城市';
+    const district = addressObj.district || addressObj.suburb || addressObj.county || addressObj.neighbourhood || '';
+    const road = addressObj.road || addressObj.street || '';
 
-    return { city, address: fullAddress, raw: data };
+    const formattedCity = province && !city.includes(province) ? `${province} · ${city}` : city;
+    const fullAddress = `${province}${city}${district} ${road}`.trim();
+
+    return {
+      province,
+      city: formattedCity,
+      district,
+      address: fullAddress,
+      raw: data
+    };
   } catch (err) {
     console.warn('Reverse geocoding error:', err);
-    return { city: '未知城市', address: '', raw: null };
+    return { province: '', city: '未知城市', district: '', address: '', raw: null };
   }
 }
 
 /**
- * Capture browser GPS coordinates and auto-fetch city name.
+ * Capture browser GPS coordinates and auto-fetch location details.
  */
 export function getCurrentLocationWithCity() {
   return new Promise((resolve, reject) => {
@@ -41,7 +50,9 @@ export function getCurrentLocationWithCity() {
         resolve({
           lat,
           lng,
+          province: geoResult.province,
           city: geoResult.city,
+          district: geoResult.district,
           address: geoResult.address
         });
       },
