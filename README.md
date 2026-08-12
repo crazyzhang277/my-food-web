@@ -4,6 +4,13 @@
 
 ---
 
+## 🌐 线上部署与在线体验 (Live Demo)
+
+- 🔗 **Cloudflare Pages 部署链接**：[https://my-food-web.pages.dev](https://my-food-web.pages.dev)
+- 📦 **GitHub 源代码仓库**：[https://github.com/crazyzhang277/my-food-web](https://github.com/crazyzhang277/my-food-web)
+
+---
+
 ## ✨ 核心特性
 
 - 🔒 **Supabase 云端同步与账号体系**：全端登录同步，数据隐私隔离，支持邮箱/密码注册登录。
@@ -19,6 +26,7 @@
 
 - **前端框架**：React 18 + Vite
 - **后端与云服务**：[Supabase](https://supabase.com/) (Auth, PostgreSQL, Storage Bucket)
+- **云端部署**：Cloudflare Pages (`https://my-food-web.pages.dev`)
 - **动效引擎**：Framer Motion
 - **图标库**：Lucide Icons (`lucide-react`)
 - **地理解析**：Browser Geolocation API + OpenStreetMap Reverse Geocoding
@@ -120,7 +128,7 @@ npm run dev
 
 - [ ] 🗺️ **交互式足迹地图大屏**：集成 Mapbox / 高德地图，以动态标记点展示所有打卡过的餐厅与城市地图轨迹。
 - [ ] 📊 **个人年度食记与口味统计报告**：可视化展示最爱的菜系标签雷达图、人均消费趋势图与年度打卡频次分析。
-- [ ] 👥 **私密圈子与美食共享**：支持生成生成精美食记海报卡片分享给好友，或创建家庭/情侣专属美食打卡圈。
+- [ ] 👥 **私密圈子与美食共享**：支持生成精美食记海报卡片分享给好友，或创建家庭/情侣专属美食打卡圈。
 - [ ] 🤖 **AI 智能菜品与卡路里识别**：拍摄美食照片，AI 自动识别菜品名称、风味特征与大致热量估算。
 - [ ] 📱 **PWA 离线打卡缓存**：无网环境下先暂存离线打卡，连网后后台全自动静默同步至 Supabase 云端。
 
