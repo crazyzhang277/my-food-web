@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { AuthModal } from './components/AuthModal';
 import { AddFoodModal } from './components/AddFoodModal';
 import { FoodDetailModal } from './components/FoodDetailModal';
+import { SplashScreen } from './components/SplashScreen';
 import { FoodCard } from './components/FoodCard';
 import { FilterBar } from './components/FilterBar';
 import { fetchFoodLogs, deleteFoodLog } from './services/foodService';
@@ -10,6 +11,7 @@ import { Plus, Utensils, LogOut, Sparkles } from 'lucide-react';
 
 function MainApp() {
   const { user, openAuthModal, signOut } = useAuth();
+  const [showSplash, setShowSplash] = useState(true);
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -68,6 +70,9 @@ function MainApp() {
 
   return (
     <div style={{ minHeight: '100vh', paddingBottom: '100px' }}>
+      {/* High-End Initial Opening Splash Screen */}
+      {showSplash && <SplashScreen onFinish={() => setShowSplash(false)} />}
+
       {/* Header Bar */}
       <header style={{
         position: 'sticky', top: 0, zIndex: 100,
