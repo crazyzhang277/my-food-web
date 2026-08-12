@@ -2,6 +2,10 @@
 
 个人美食打卡与记忆库，使用 React + Vite，Supabase 提供 Auth、PostgreSQL 和 Storage。
 
+## 在线体验
+
+[打开 GourmetLog 美食打卡](https://crazyzhang277.github.io/my-food-web/)
+
 ## 本地运行
 
 ```bash
