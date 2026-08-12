@@ -74,16 +74,11 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
     setErrorMsg('');
 
     try {
-      // 1. Upload images to Supabase Storage
+      // 1. Upload images to Supabase Storage if user selected any
       const uploadedUrls = [];
       for (const file of selectedFiles) {
         const url = await uploadFoodImage(file, user.id);
         uploadedUrls.push(url);
-      }
-
-      // Fallback demo image if no file uploaded
-      if (uploadedUrls.length === 0) {
-        uploadedUrls.push('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80');
       }
 
       // 2. Format tags and recommended dishes
@@ -103,7 +98,7 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
         price_per_person: price ? Number(price) : null,
         recommended_dishes,
         tags,
-        image_urls: uploadedUrls,
+        image_urls: uploadedUrls, // Only store user uploaded images
         notes: notes,
         dining_date: diningDate
       });
@@ -154,7 +149,9 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {/* Photo Upload Zone */}
             <div>
-              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>美食照片</label>
+              <label style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>
+                美食照片 (支持多张全套大图上传)
+              </label>
               <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                 {previewUrls.map((url, idx) => (
                   <div key={idx} style={{ width: '80px', height: '80px', borderRadius: '12px', overflow: 'hidden', position: 'relative' }}>
@@ -206,9 +203,9 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <input
-                  type="text" placeholder="城市（如：成都）" value={city} onChange={e => setCity(e.target.value)}
+                  type="text" placeholder="城市（如：广州市）" value={city} onChange={e => setCity(e.target.value)}
                   style={{
-                    width: '120px', padding: '10px', background: 'var(--bg-primary)',
+                    width: '140px', padding: '10px', background: 'var(--bg-primary)',
                     border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                   }}
                 />
