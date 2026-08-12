@@ -28,7 +28,9 @@ export async function uploadFoodImage(file, userId) {
 
   const { data, error } = await supabase.storage
     .from('food-images')
-    .upload(fileName, compressedFile, { cacheControl: '3600', upsert: true });
+    // File names are unique, so a plain INSERT avoids the extra SELECT/UPDATE
+    // permissions required by Supabase's upsert path.
+    .upload(fileName, compressedFile, { cacheControl: '3600', upsert: false });
 
   if (error) throw error;
 

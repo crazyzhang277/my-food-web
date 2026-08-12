@@ -69,6 +69,14 @@ insert into storage.buckets (id, name, public)
 values ('food-images', 'food-images', true)
 on conflict (id) do update set public = excluded.public;
 
+drop policy if exists "Users can view own food images" on storage.objects;
+create policy "Users can view own food images" on storage.objects
+  for select to authenticated
+  using (
+    bucket_id = 'food-images'
+    and (storage.foldername(name))[1] = (select auth.uid()::text)
+  );
+
 drop policy if exists "Users can upload own food images" on storage.objects;
 create policy "Users can upload own food images" on storage.objects
   for insert to authenticated
