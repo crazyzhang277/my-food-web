@@ -23,21 +23,23 @@ export function FoodCard({ log, onDelete }) {
         display: 'flex', flexDirection: 'column'
       }}
     >
-      <div style={{ height: '180px', width: '100%', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ height: '190px', width: '100%', position: 'relative', overflow: 'hidden' }}>
         <img src={imageUrl} alt={log.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         <div style={{
           position: 'absolute', top: '12px', right: '12px',
-          background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)',
+          background: 'rgba(255, 255, 255, 0.92)', backdropFilter: 'blur(8px)',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
           borderRadius: 'var(--radius-full)', padding: '4px 10px',
-          display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--accent-amber)', fontSize: '0.85rem'
+          display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-primary)', fontSize: '0.85rem'
         }}>
-          <Star size={14} fill="var(--accent-amber)" />
+          <Star size={14} fill="var(--accent-amber)" color="var(--accent-amber)" />
           <span style={{ fontWeight: 700 }}>{log.rating}.0</span>
         </div>
         <div style={{
           position: 'absolute', bottom: '12px', left: '12px',
           background: 'var(--accent-gradient)', color: '#fff',
-          borderRadius: 'var(--radius-full)', padding: '2px 10px', fontSize: '0.75rem', fontWeight: 600
+          borderRadius: 'var(--radius-full)', padding: '3px 12px', fontSize: '0.75rem', fontWeight: 600,
+          boxShadow: '0 4px 12px rgba(255, 111, 67, 0.3)'
         }}>
           📍 {log.city}
         </div>
@@ -45,7 +47,7 @@ export function FoodCard({ log, onDelete }) {
 
       <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', flex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 700 }}>{log.title}</h3>
+          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>{log.title}</h3>
           {log.price_per_person && (
             <span style={{ color: 'var(--accent-orange)', fontWeight: 700, fontSize: '0.95rem' }}>
               ￥{log.price_per_person}/人
@@ -63,8 +65,8 @@ export function FoodCard({ log, onDelete }) {
           <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '10px' }}>
             {log.recommended_dishes.map((dish, i) => (
               <span key={i} style={{
-                background: 'rgba(255, 107, 53, 0.12)', color: 'var(--accent-orange)',
-                padding: '2px 8px', borderRadius: '6px', fontSize: '0.75rem'
+                background: 'rgba(255, 111, 67, 0.1)', color: 'var(--accent-orange)',
+                padding: '2px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 500
               }}>
                 👍 {dish}
               </span>
@@ -75,7 +77,7 @@ export function FoodCard({ log, onDelete }) {
         {log.notes && (
           <p style={{
             color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '10px',
-            lineHeight: '1.4', background: 'var(--bg-primary)', padding: '8px 10px', borderRadius: '8px'
+            lineHeight: '1.4', background: 'var(--bg-secondary)', padding: '8px 10px', borderRadius: '8px'
           }}>
             "{log.notes}"
           </p>

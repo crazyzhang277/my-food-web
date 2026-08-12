@@ -13,7 +13,7 @@ export function FilterBar({ cities, selectedCity, onSelectCity, searchQuery, onS
           style={{
             width: '100%', padding: '12px 14px 12px 42px',
             background: 'var(--card-bg)', border: '1px solid var(--glass-border)',
-            borderRadius: 'var(--radius-full)', color: '#fff', boxShadow: 'var(--shadow-card)'
+            borderRadius: 'var(--radius-full)', color: 'var(--text-primary)', boxShadow: 'var(--shadow-card)'
           }}
         />
       </div>
@@ -23,10 +23,11 @@ export function FilterBar({ cities, selectedCity, onSelectCity, searchQuery, onS
         <button
           onClick={() => onSelectCity('')}
           style={{
-            padding: '6px 14px', borderRadius: 'var(--radius-full)', fontSize: '0.85rem',
+            padding: '6px 14px', borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: 600,
             background: selectedCity === '' ? 'var(--accent-gradient)' : 'var(--card-bg)',
             color: selectedCity === '' ? '#fff' : 'var(--text-secondary)',
-            border: '1px solid var(--glass-border)', whiteSpace: 'nowrap'
+            border: '1px solid var(--glass-border)', whiteSpace: 'nowrap',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
           }}
         >
           全部城市
@@ -35,10 +36,11 @@ export function FilterBar({ cities, selectedCity, onSelectCity, searchQuery, onS
           <button
             key={c} onClick={() => onSelectCity(c)}
             style={{
-              padding: '6px 14px', borderRadius: 'var(--radius-full)', fontSize: '0.85rem',
+              padding: '6px 14px', borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: 600,
               background: selectedCity === c ? 'var(--accent-gradient)' : 'var(--card-bg)',
               color: selectedCity === c ? '#fff' : 'var(--text-secondary)',
-              border: '1px solid var(--glass-border)', whiteSpace: 'nowrap'
+              border: '1px solid var(--glass-border)', whiteSpace: 'nowrap',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
             }}
           >
             📍 {c}

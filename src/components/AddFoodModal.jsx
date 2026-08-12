@@ -121,7 +121,7 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
     <AnimatePresence>
       <div className="modal-overlay" style={{
         position: 'fixed', inset: 0, zIndex: 1000,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)', backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgba(45, 37, 34, 0.45)', backdropFilter: 'blur(10px)',
         display: 'flex', alignItems: 'flex-end', justifyContent: 'center'
       }}>
         <motion.div
@@ -138,14 +138,14 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem' }}>🍜 记录一份美食</h2>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', color: 'var(--text-primary)' }}>🍜 记录一份美食</h2>
             <button onClick={onClose} style={{ background: 'none', color: 'var(--text-muted)' }}><X size={24} /></button>
           </div>
 
           {errorMsg && (
             <div style={{
-              background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)',
-              color: '#f87171', padding: '10px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px'
+              background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)',
+              color: '#dc2626', padding: '10px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px'
             }}>
               {errorMsg}
             </div>
@@ -170,7 +170,8 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
                 <label style={{
                   width: '80px', height: '80px', borderRadius: '12px',
                   border: '2px dashed var(--glass-border)', display: 'flex', flexDirection: 'column',
-                  alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-muted)'
+                  alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--text-muted)',
+                  background: 'var(--bg-primary)'
                 }}>
                   <Upload size={20} />
                   <span style={{ fontSize: '0.7rem', marginTop: '4px' }}>添加照片</span>
@@ -187,7 +188,7 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
                 value={restaurantName} onChange={e => setRestaurantName(e.target.value)}
                 style={{
                   width: '100%', padding: '12px', background: 'var(--bg-primary)',
-                  border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-md)', color: '#fff'
+                  border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-md)', color: 'var(--text-primary)'
                 }}
               />
             </div>
@@ -208,14 +209,14 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
                   type="text" placeholder="城市（如：成都）" value={city} onChange={e => setCity(e.target.value)}
                   style={{
                     width: '120px', padding: '10px', background: 'var(--bg-primary)',
-                    border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: '#fff'
+                    border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                   }}
                 />
                 <input
                   type="text" placeholder="详细地址 / 地标" value={address} onChange={e => setAddress(e.target.value)}
                   style={{
                     flex: 1, padding: '10px', background: 'var(--bg-primary)',
-                    border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: '#fff'
+                    border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -243,7 +244,7 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
                   type="number" placeholder="88" value={price} onChange={e => setPrice(e.target.value)}
                   style={{
                     width: '100%', padding: '10px', background: 'var(--bg-primary)',
-                    border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: '#fff'
+                    border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -256,7 +257,7 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
                 type="text" placeholder="毛肚, 鸭肠, 冰粉" value={dishesInput} onChange={e => setDishesInput(e.target.value)}
                 style={{
                   width: '100%', padding: '10px', background: 'var(--bg-primary)',
-                  border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: '#fff'
+                  border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                 }}
               />
             </div>
@@ -268,7 +269,7 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
                 rows={3} placeholder="环境优雅，味道正宗..." value={notes} onChange={e => setNotes(e.target.value)}
                 style={{
                   width: '100%', padding: '10px', background: 'var(--bg-primary)',
-                  border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: '#fff', resize: 'none'
+                  border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)', resize: 'none'
                 }}
               />
             </div>

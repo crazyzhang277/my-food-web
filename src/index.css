@@ -25,4 +25,10 @@ button {
 input, textarea, select {
   font-family: inherit;
   outline: none;
+  color: var(--text-primary);
+}
+
+::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
 }

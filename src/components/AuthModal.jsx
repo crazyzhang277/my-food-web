@@ -36,7 +36,7 @@ export function AuthModal() {
     <AnimatePresence>
       <div className="modal-overlay" style={{
         position: 'fixed', inset: 0, zIndex: 1000,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        backgroundColor: 'rgba(45, 37, 34, 0.45)',
         backdropFilter: 'blur(8px)',
         display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px'
       }}>
@@ -68,7 +68,7 @@ export function AuthModal() {
             }}>
               <UtensilsCrossed size={24} />
             </div>
-            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem' }}>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', color: 'var(--text-primary)' }}>
               {isSignUp ? '注册 Gourmet Account' : '登录美食回忆库'}
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '4px' }}>
@@ -78,8 +78,8 @@ export function AuthModal() {
 
           {errorMsg && (
             <div style={{
-              background: 'rgba(239, 68, 68, 0.15)', border: '1px solid rgba(239, 68, 68, 0.3)',
-              color: '#f87171', padding: '10px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px'
+              background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)',
+              color: '#dc2626', padding: '10px', borderRadius: '8px', fontSize: '0.85rem', marginBottom: '16px'
             }}>
               {errorMsg}
             </div>
@@ -95,7 +95,7 @@ export function AuthModal() {
                   style={{
                     width: '100%', padding: '10px 12px 10px 40px',
                     background: 'var(--bg-primary)', border: '1px solid var(--glass-border)',
-                    borderRadius: 'var(--radius-sm)', color: '#fff'
+                    borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                   }}
                 />
               </div>
@@ -108,7 +108,7 @@ export function AuthModal() {
                 style={{
                   width: '100%', padding: '10px 12px 10px 40px',
                   background: 'var(--bg-primary)', border: '1px solid var(--glass-border)',
-                  borderRadius: 'var(--radius-sm)', color: '#fff'
+                  borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                 }}
               />
             </div>
@@ -120,7 +120,7 @@ export function AuthModal() {
                 style={{
                   width: '100%', padding: '10px 12px 10px 40px',
                   background: 'var(--bg-primary)', border: '1px solid var(--glass-border)',
-                  borderRadius: 'var(--radius-sm)', color: '#fff'
+                  borderRadius: 'var(--radius-sm)', color: 'var(--text-primary)'
                 }}
               />
             </div>

@@ -5,7 +5,7 @@ import { AddFoodModal } from './components/AddFoodModal';
 import { FoodCard } from './components/FoodCard';
 import { FilterBar } from './components/FilterBar';
 import { fetchFoodLogs, deleteFoodLog } from './services/foodService';
-import { Plus, Utensils, LogOut, User, Sparkles } from 'lucide-react';
+import { Plus, Utensils, LogOut, Sparkles } from 'lucide-react';
 
 function MainApp() {
   const { user, openAuthModal, signOut } = useAuth();
@@ -73,15 +73,16 @@ function MainApp() {
         borderBottom: '1px solid var(--glass-border)', padding: '16px 20px',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
-            width: '36px', height: '36px', borderRadius: '10px',
+            width: '38px', height: '38px', borderRadius: '12px',
             background: 'var(--accent-gradient)', display: 'flex',
-            alignItems: 'center', justifyContent: 'center', color: '#fff'
+            alignItems: 'center', justifyContent: 'center', color: '#fff',
+            boxShadow: '0 4px 12px rgba(255, 111, 67, 0.3)'
           }}>
             <Utensils size={20} />
           </div>
-          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', fontWeight: 800 }}>
+          <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-primary)' }}>
             Gourmet<span style={{ color: 'var(--accent-orange)' }}>Log</span>
           </h1>
         </div>
@@ -89,7 +90,7 @@ function MainApp() {
         <div>
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
                 {user.user_metadata?.username || user.email?.split('@')[0]}
               </span>
               <button onClick={signOut} style={{ background: 'none', color: 'var(--text-muted)' }}>
@@ -100,8 +101,9 @@ function MainApp() {
             <button
               onClick={openAuthModal}
               style={{
-                background: 'var(--accent-gradient)', color: '#fff', padding: '6px 16px',
-                borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: 600
+                background: 'var(--accent-gradient)', color: '#fff', padding: '8px 18px',
+                borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: 600,
+                boxShadow: 'var(--shadow-glow)'
               }}
             >
               登录 / 注册
@@ -114,11 +116,12 @@ function MainApp() {
       <main style={{ maxWidth: '800px', margin: '0 auto', padding: '20px 16px' }}>
         {/* Intro / Stats Hero */}
         <div style={{
-          background: 'linear-gradient(135deg, rgba(255,107,53,0.12) 0%, rgba(245,158,11,0.05) 100%)',
+          background: 'linear-gradient(135deg, rgba(255, 111, 67, 0.08) 0%, rgba(255, 158, 44, 0.04) 100%)',
           border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-lg)',
-          padding: '20px', marginBottom: '24px', position: 'relative', overflow: 'hidden'
+          padding: '20px', marginBottom: '24px', position: 'relative', overflow: 'hidden',
+          boxShadow: '0 8px 24px -6px rgba(165, 140, 120, 0.08)'
         }}>
-          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.2rem', marginBottom: '6px' }}>
+          <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.25rem', marginBottom: '6px', color: 'var(--text-primary)' }}>
             🍽️ 我的私房美食记忆库
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
@@ -143,10 +146,11 @@ function MainApp() {
         ) : !user ? (
           <div style={{
             textAlign: 'center', padding: '60px 20px', background: 'var(--card-bg)',
-            borderRadius: 'var(--radius-lg)', border: '1px solid var(--glass-border)'
+            borderRadius: 'var(--radius-lg)', border: '1px solid var(--glass-border)',
+            boxShadow: 'var(--shadow-card)'
           }}>
             <Sparkles size={40} style={{ color: 'var(--accent-orange)', marginBottom: '12px' }} />
-            <h3 style={{ fontFamily: 'var(--font-heading)', marginBottom: '8px' }}>必须要登录才能开启美食记录</h3>
+            <h3 style={{ fontFamily: 'var(--font-heading)', marginBottom: '8px', color: 'var(--text-primary)' }}>必须要登录才能开启美食记录</h3>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '16px' }}>
               注册并登录你的云端账号，随时同步照片与地图定位
             </p>
@@ -154,7 +158,7 @@ function MainApp() {
               onClick={openAuthModal}
               style={{
                 background: 'var(--accent-gradient)', color: '#fff', padding: '10px 24px',
-                borderRadius: 'var(--radius-full)', fontWeight: 600
+                borderRadius: 'var(--radius-full)', fontWeight: 600, boxShadow: 'var(--shadow-glow)'
               }}
             >
               立即登录 / 注册
@@ -163,7 +167,8 @@ function MainApp() {
         ) : filteredLogs.length === 0 ? (
           <div style={{
             textAlign: 'center', padding: '60px 20px', background: 'var(--card-bg)',
-            borderRadius: 'var(--radius-lg)', border: '1px solid var(--glass-border)'
+            borderRadius: 'var(--radius-lg)', border: '1px solid var(--glass-border)',
+            boxShadow: 'var(--shadow-card)'
           }}>
             <p style={{ color: 'var(--text-secondary)' }}>暂无符合条件的美食记录，点击下方 `+` 开启第一次打卡！</p>
           </div>
