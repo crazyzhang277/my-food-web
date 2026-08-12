@@ -77,7 +77,12 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
       // 1. Upload images to Supabase Storage if user selected any
       const uploadedUrls = [];
       for (const file of selectedFiles) {
-        const url = await uploadFoodImage(file, user.id);
+        let url;
+        try {
+          url = await uploadFoodImage(file, user.id);
+        } catch (error) {
+          throw new Error(`图片上传失败：${error.message || '请检查 Supabase Storage 配置'}`);
+        }
         uploadedUrls.push(url);
       }
 
@@ -86,22 +91,26 @@ export function AddFoodModal({ isOpen, onClose, onSuccess }) {
       const tags = tagsInput ? tagsInput.split(/[,，\s]+/).filter(Boolean) : [];
 
       // 3. Create food log row
-      await createFoodLog({
-        user_id: user.id,
-        title: restaurantName,
-        restaurant_name: restaurantName,
-        city: city || '未指定城市',
-        address: address,
-        latitude: latitude,
-        longitude: longitude,
-        rating: Number(rating),
-        price_per_person: price ? Number(price) : null,
-        recommended_dishes,
-        tags,
-        image_urls: uploadedUrls, // Only store user uploaded images
-        notes: notes,
-        dining_date: diningDate
-      });
+      try {
+        await createFoodLog({
+          user_id: user.id,
+          title: restaurantName,
+          restaurant_name: restaurantName,
+          city: city || '未指定城市',
+          address: address,
+          latitude: latitude,
+          longitude: longitude,
+          rating: Number(rating),
+          price_per_person: price ? Number(price) : null,
+          recommended_dishes,
+          tags,
+          image_urls: uploadedUrls,
+          notes: notes,
+          dining_date: diningDate
+        });
+      } catch (error) {
+        throw new Error(`记录保存失败：${error.message || '请检查登录状态和数据库策略'}`);
+      }
 
       onSuccess();
       onClose();

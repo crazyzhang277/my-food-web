@@ -36,51 +36,9 @@
 
 ## 🗄️ 数据库 Schema 配置 (Supabase SQL)
 
-在 Supabase Dashboard 的 SQL Editor 中运行以下建表语句：
+在 Supabase Dashboard 的 SQL Editor 中运行 [`supabase/schema.sql`](supabase/schema.sql)。该脚本会创建数据表、RLS 策略、`food-images` Storage 桶，以及按用户目录限制的图片上传策略。
 
-```sql
--- 1. 创建用户 Profile 表
-create table public.profiles (
-  id uuid references auth.users on delete cascade primary key,
-  username text not null,
-  avatar_url text,
-  created_at timestamptz default now() not null
-);
-
--- 2. 创建美食打卡记录表
-create table public.food_logs (
-  id uuid default gen_random_uuid() primary key,
-  user_id uuid references public.profiles(id) on delete cascade not null,
-  title text not null,
-  restaurant_name text not null,
-  city text not null,
-  address text,
-  latitude float8,
-  longitude float8,
-  rating smallint check (rating >= 1 and rating <= 5) not null default 5,
-  price_per_person numeric(10, 2),
-  recommended_dishes text[] default '{}'::text[],
-  tags text[] default '{}'::text[],
-  image_urls text[] not null default '{}'::text[],
-  notes text,
-  dining_date date default current_date not null,
-  created_at timestamptz default now() not null,
-  updated_at timestamptz default now() not null
-);
-
--- 3. 开启 Row Level Security (RLS)
-alter table public.profiles enable row level security;
-alter table public.food_logs enable row level security;
-
--- 4. RLS 安全策略与外键修复
-alter table public.food_logs drop constraint if exists food_logs_user_id_fkey;
-alter table public.food_logs add constraint food_logs_user_id_fkey foreign key (user_id) references auth.users(id) on delete cascade;
-create policy "Allow profile insert" on public.profiles for insert with check (true);
-create policy "Users can view own food logs" on public.food_logs for select using (auth.uid() = user_id);
-create policy "Users can insert own food logs" on public.food_logs for insert with check (auth.uid() = user_id);
-create policy "Users can update own food logs" on public.food_logs for update using (auth.uid() = user_id);
-create policy "Users can delete own food logs" on public.food_logs for delete using (auth.uid() = user_id);
-```
+若项目已存在旧表，请直接执行该脚本；其中的 `create table if not exists` 与 `drop policy if exists` 设计为可重复执行。
 
 ---
 

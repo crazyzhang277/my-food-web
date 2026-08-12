@@ -53,23 +53,10 @@ export async function fetchFoodLogs() {
 }
 
 /**
- * Create a new food log - automatically ensures profile exists
+ * Create a new food log.
+ * The foreign key points to auth.users, so a profile row is not required.
  */
 export async function createFoodLog(logData) {
-  // Ensure profile row exists to satisfy foreign key constraint
-  try {
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      const username = user?.user_metadata?.username || user?.email?.split('@')[0] || '美食家';
-      await supabase.from('profiles').upsert({
-        id: user.id,
-        username: username
-      }, { onConflict: 'id' });
-    }
-  } catch (profileErr) {
-    console.warn('Profile upsert auto-handled:', profileErr);
-  }
-
   const { data, error } = await supabase
     .from('food_logs')
     .insert([logData])
